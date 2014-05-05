@@ -12,20 +12,22 @@ public class CustomIconGeneratorDemoActivity extends BaseDemoActivity {
     protected void startDemo() {
         getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.8696, 151.2094), 10));
 
-        IconGenerator iconFactory = new IconGenerator(this);
+        IconGenerator iconFactory = new IconGenerator(this, R.layout.text_custom_bubble);
 
-        iconFactory.setCustomStyle(com.google.maps.android.R.drawable.car_icon_green, com.google.maps.android.R.style.Bubble_TextAppearance_Light
+        iconFactory.setCustomStyle(R.drawable.car_icon_green, com.google.maps.android.R.style.Bubble_TextAppearance_Light
         );
         addIcon(iconFactory, "Blue style\nasdsadsadasdsad\nsakdjsakldjasl", new LatLng(41.59223, 12.5036633));
 
 
+        // default with same icon
         addIcon(iconFactory, "Default", new LatLng(-33.8696, 151.2094));
 
         iconFactory.setStyle(IconGenerator.STYLE_BLUE);
         addIcon(iconFactory, "Blue style", new LatLng(-33.9360, 151.2070));
 
         iconFactory.setRotation(90);
-        iconFactory.setStyle(IconGenerator.STYLE_RED);
+        iconFactory.setCustomStyle(R.drawable.car_icon_green, com.google.maps.android.R.style.Bubble_TextAppearance_Light
+        );
         addIcon(iconFactory, "Rotated 90 degrees", new LatLng(-33.8858, 151.096));
 
         iconFactory.setContentRotation(-90);
