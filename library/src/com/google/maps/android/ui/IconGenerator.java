@@ -51,12 +51,24 @@ public class IconGenerator {
     private float mAnchorU = 0.5f;
     private float mAnchorV = 1f;
 
+    // custom layout id
+    private int mCustomLayout;
+
     /**
      * Creates a new IconGenerator with the default style.
      */
     public IconGenerator(Context context) {
         mContext = context;
     }
+
+    /**
+     * Creates a new IconGenerator with the custom layout.
+     */
+    public IconGenerator(Context context, int layoutId) {
+        mContext = context;
+        mCustomLayout = layoutId;
+    }
+
 
     /**
      * Sets the text content, then creates an icon with the current style.
@@ -246,7 +258,14 @@ public class IconGenerator {
      */
     private void ensureViewsSetUp() {
         if (mContainer == null) {
-            mContainer = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.text_bubble, null);
+
+            if (mCustomLayout != 0) { //setted a custom layout
+                //TODO: possibility to set customView mappings (maybe using an associative hasmap)
+                mContainer = (ViewGroup) LayoutInflater.from(mContext).inflate(mCustomLayout, null);
+            } else { //default layout
+                mContainer = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.text_bubble, null);
+            }
+
             mRotationLayout = (RotationLayout) mContainer.getChildAt(0);
             mContentView = mTextView = (TextView) mRotationLayout.findViewById(R.id.text);
         }
@@ -306,5 +325,16 @@ public class IconGenerator {
             case STYLE_ORANGE:
                 return R.style.Bubble_TextAppearance_Light;
         }
+    }
+
+    /**
+     * Add a custom style
+     *
+     * @param backgroundStyle
+     * @param textStyle
+     */
+    public void setCustomStyle(int backgroundStyle, int textStyle) {
+        setBackground(mContext.getResources().getDrawable(backgroundStyle));
+        setTextAppearance(mContext, textStyle);
     }
 }
